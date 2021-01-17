@@ -1,14 +1,42 @@
 <template>
   <div class="todo-header">
-    <input type="text" placeholder="请输入你的任务名称，按回车键确认" />
+    <input
+      type="text"
+      placeholder="请输入你的任务名称，按回车键确认"
+      @keyup.enter="add"
+      v-model="title"
+    />
   </div>
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
+
 export default {
   name: 'Header',
-  setup() {
-    return {}
+  props: {
+    addTodo: {
+      type: Function,
+      required: true,
+    },
+  },
+  setup(props) {
+    const title = ref('')
+    const add = () => {
+    const text = title.value
+      if (!text.trim()) return
+      const todo = {
+        id: Date.now(),
+        title: text,
+        isCompleted: false,
+      }
+      props.addTodo(todo)
+      title.value = ''
+    }
+    return {
+      title,
+      add,
+    }
   },
 }
 </script>

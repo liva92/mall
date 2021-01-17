@@ -1,8 +1,8 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Header />
-      <List :todos="todos"/>
+      <Header :addTodo="addTodo"/>
+      <List :todos="todos" />
       <Footer />
     </div>
   </div>
@@ -13,7 +13,7 @@ import { defineComponent, reactive, toRefs } from 'vue'
 import Header from './components/Header.vue'
 import List from './components/List.vue'
 import Footer from './components/Footer.vue'
-import {Todo} from './type/type'
+import { Todo } from './type/type'
 
 export default defineComponent({
   name: 'App',
@@ -31,8 +31,12 @@ export default defineComponent({
         { id: 3, title: '特斯拉', isCompleted: false },
       ],
     })
+    const addTodo = (todo: Todo) => {
+      state.todos.unshift(todo)
+    }
     return {
       ...toRefs(state),
+      addTodo,
     }
   },
 })
