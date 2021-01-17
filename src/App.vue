@@ -2,17 +2,18 @@
   <div class="todo-container">
     <div class="todo-wrap">
       <Header />
-      <List />
+      <List :todos="todos"/>
       <Footer />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive, toRefs } from 'vue'
 // 引入直接的子级组件
 import Header from './components/Header.vue'
 import List from './components/List.vue'
 import Footer from './components/Footer.vue'
+import {Todo} from './type/type'
 
 export default defineComponent({
   name: 'App',
@@ -22,21 +23,31 @@ export default defineComponent({
     List,
     Footer,
   },
+  setup() {
+    const state = reactive<{ todos: Todo[] }>({
+      todos: [
+        { id: 1, title: '奔驰', isCompleted: false },
+        { id: 2, title: '宝马', isCompleted: true },
+        { id: 3, title: '特斯拉', isCompleted: false },
+      ],
+    })
+    return {
+      ...toRefs(state),
+    }
+  },
 })
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 /*app*/
 .todo-container {
   width: 600px;
   margin: 0 auto;
   // border: 1px solid #ddd;
-  & .todo-wrap{
-      padding: 10px;
+  & .todo-wrap {
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
   }
- 
 }
-
 </style>

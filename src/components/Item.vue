@@ -1,16 +1,21 @@
 <template>
   <li>
-    <label for="item">
-      <input type="checkbox" name="item" />
-      <span>奔驰</span>
+    <label>
+      <input type="checkbox" />
+      <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger">删除</button>
   </li>
 </template>
 
 <script lang="ts">
+import { Todo } from '../type/type'
+
 export default {
   name: 'Item',
+  props: {
+    todo: Object as () => Todo,
+  },
 }
 </script>
 <style lang="scss">
@@ -36,10 +41,10 @@ li {
     margin-top: 3px;
   }
   &:before {
-  content: initial;
-}
-&:last-child {
-  border-bottom: none;
-}
+    content: initial;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
 }
 </style>
