@@ -1,7 +1,7 @@
 <template>
   <li>
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isComptete" />
       <span>{{ todo.title }}</span>
     </label>
     <button class="btn btn-danger" @click="delTodo">
@@ -10,7 +10,7 @@
   </li>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 // 引入接口
 import { Todo } from '../types/todo'
 export default defineComponent({
@@ -28,6 +28,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
+    updateTodo:{
+      type: Function,
+      required: true,
+    }
   },
   setup(props) {
     // 删除数据的方法
@@ -37,9 +41,17 @@ export default defineComponent({
         props.deleteTodo(props.index)
       }
     }
-
+    const isComptete=computed ({
+      get(){
+        return props.todo.isCompleted
+      },
+      set(val){
+        props.updateTodo(props.todo,val)
+      }
+    })
     return {
       delTodo,
+      isComptete
     }
   },
 })

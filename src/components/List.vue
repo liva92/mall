@@ -6,6 +6,7 @@
       :todo="todo"
       :index="index"
       :deleteTodo="deleteTodo"
+      :updateTodo="updateTodo"
     />
   </ul>
 </template>
@@ -17,7 +18,7 @@ export default {
   components: {
     Item,
   },
-  props: ['todos','deleteTodo'],
+  props: ['todos','deleteTodo','updateTodo'],
 }
 </script>
 <style lang="scss">
