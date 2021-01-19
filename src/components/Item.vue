@@ -63,14 +63,24 @@ li {
   }
   button {
     float: right;
-    /* display: none; */
-    margin-top: 3px;
+    display: none;
+    margin-top: 8px;
+    color: #fff;
+    background: red;
+    border: none;
   }
   &:before {
     content: initial;
   }
   &:last-child {
     border-bottom: none;
+  }
+  &:hover,
+  &:active {
+    background: pink;
+    button {
+      display: inline-block;
+    }
   }
 }
 </style>
