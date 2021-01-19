@@ -5,6 +5,7 @@
       :key="todo.id"
       :todo="todo"
       :index="index"
+      :deleteTodo="deleteTodo"
     />
   </ul>
 </template>
@@ -16,7 +17,7 @@ export default {
   components: {
     Item,
   },
-  props: ['todos'],
+  props: ['todos','deleteTodo'],
 }
 </script>
 <style lang="scss">

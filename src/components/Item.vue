@@ -4,19 +4,45 @@
       <input type="checkbox" />
       <span>{{ todo.title }}</span>
     </label>
-    <button class="btn btn-danger">删除</button>
+    <button class="btn btn-danger" @click="delTodo">
+      删除
+    </button>
   </li>
 </template>
-
 <script lang="ts">
-import { Todo } from '../type/type'
-
-export default {
+import { defineComponent } from 'vue'
+// 引入接口
+import { Todo } from '../types/todo'
+export default defineComponent({
   name: 'Item',
   props: {
-    todo: Object as () => Todo,
+    todo: {
+      type: Object as () => Todo, // 函数返回的是Todo类型
+      required: true,
+    },
+    deleteTodo: {
+      type: Function,
+      required: true,
+    },
+    index: {
+      type: Number,
+      required: true,
+    },
   },
-}
+  setup(props) {
+    // 删除数据的方法
+    const delTodo = () => {
+      // 提示
+      if (window.confirm('确定要删除吗?')) {
+        props.deleteTodo(props.index)
+      }
+    }
+
+    return {
+      delTodo,
+    }
+  },
+})
 </script>
 <style lang="scss">
 li {

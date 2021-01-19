@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { ref } from 'vue'
 
 export default {
@@ -23,7 +23,7 @@ export default {
   setup(props) {
     const title = ref('')
     const add = () => {
-    const text = title.value
+      const text = title.value
       if (!text.trim()) return
       const todo = {
         id: Date.now(),
