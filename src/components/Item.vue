@@ -12,7 +12,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 // 引入接口
-import { Todo } from '../types/todo'
+import { Todo } from '../type/type'
 export default defineComponent({
   name: 'Item',
   props: {
@@ -28,10 +28,10 @@ export default defineComponent({
       type: Number,
       required: true,
     },
-    updateTodo:{
+    updateTodo: {
       type: Function,
       required: true,
-    }
+    },
   },
   setup(props) {
     // 删除数据的方法
@@ -41,17 +41,17 @@ export default defineComponent({
         props.deleteTodo(props.index)
       }
     }
-    const isComptete=computed ({
-      get(){
+    const isComptete = computed({
+      get() {
         return props.todo.isCompleted
       },
-      set(val){
-        props.updateTodo(props.todo,val)
-      }
+      set(val) {
+        props.updateTodo(props.todo, val)
+      },
     })
     return {
       delTodo,
-      isComptete
+      isComptete,
     }
   },
 })

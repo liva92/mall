@@ -3,18 +3,48 @@
     <label>
       <input type="checkbox" />
     </label>
-    <span> <span>已完成2</span>/全部5 </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <span>
+      <span>已完成{{ count }}</span> / 全部{{ todos.length }}
+    </span>
+    <button class="btn btn-danger">
+      清除已完成任务
+    </button>
   </div>
 </template>
-
 <script lang="ts">
-export default {
+import { defineComponent, computed } from 'vue'
+import { Todo } from '../type/type'
+export default defineComponent({
   name: 'Footer',
-  setup() {
-    return {}
+  props: {
+    todos: {
+      type: Array as () => Todo[],
+      required: true,
+    },
+    checkAll: {
+      type: Function,
+      required: true,
+    },
+    clearAllCompletedTodos: {
+      type: Function,
+      required: true,
+    },
   },
-}
+  setup(props) {
+    // 已完成的计算属性操作
+    const count = computed(() => {
+      return props.todos.reduce(
+        (pre, todo, index) => pre + (todo.isCompleted ? 1 : 0),
+        0
+      )
+    })
+    
+    return {
+      count,
+     
+    }
+  },
+})
 </script>
 <style lang="scss">
 .todo-footer {
@@ -34,8 +64,8 @@ export default {
     }
   }
   & button {
-  float: right;
-  margin-top: 5px;
-}
+    float: right;
+    margin-top: 5px;
+  }
 }
 </style>
