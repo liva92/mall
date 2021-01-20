@@ -3,7 +3,7 @@
     <div class="todo-wrap">
       <Header :addTodo="addTodo" />
       <List :todos="todos" :deleteTodo="deleteTodo" :updateTodo="updateTodo" />
-      <Footer :todos="todos"/>
+      <Footer :todos="todos" :checkAll="checkAll" />
     </div>
   </div>
 </template>
@@ -41,11 +41,17 @@ export default defineComponent({
       todo.isCompleted = isCompleted
       console.log(isCompleted)
     }
+    const checkAll = (isCompleted: boolean) => {
+      state.todos.forEach((todo) => {
+        todo.isCompleted = isCompleted
+      })
+    }
     return {
       ...toRefs(state),
       addTodo,
       deleteTodo,
       updateTodo,
+      checkAll,
     }
   },
 })

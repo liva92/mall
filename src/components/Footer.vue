@@ -1,7 +1,7 @@
 <template>
   <div class="todo-footer">
     <label>
-      <input type="checkbox" />
+      <input type="checkbox" v-model="isCheck" />
     </label>
     <span>
       <span>已完成{{ count }}</span> / 全部{{ todos.length }}
@@ -34,14 +34,21 @@ export default defineComponent({
     // 已完成的计算属性操作
     const count = computed(() => {
       return props.todos.reduce(
-        (pre, todo, index) => pre + (todo.isCompleted ? 1 : 0),
+        (pre, todo) => pre + (todo.isCompleted ? 1 : 0),
         0
       )
     })
-    
+    const isCheck = computed({
+      get() {
+        return count.value > 0 && props.todos.length === count.value
+      },
+      set(val) {
+        props.checkAll(val)
+      },
+    })
     return {
       count,
-     
+      isCheck,
     }
   },
 })
