@@ -3,17 +3,22 @@
     <div class="todo-wrap">
       <Header :addTodo="addTodo" />
       <List :todos="todos" :deleteTodo="deleteTodo" :updateTodo="updateTodo" />
-      <Footer :todos="todos" :checkAll="checkAll" :clearAllCompletedTodos="clearAllCompletedTodos" />
+      <Footer
+        :todos="todos"
+        :checkAll="checkAll"
+        :clearAllCompletedTodos="clearAllCompletedTodos"
+      />
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, onMounted, reactive, toRefs, watch } from 'vue'
 // 引入直接的子级组件
 import Header from './components/Header.vue'
 import List from './components/List.vue'
 import Footer from './components/Footer.vue'
 import { Todo } from './type/type'
+import { readTodos, saveTodos } from './until/localStorageUtilsts'
 
 export default defineComponent({
   name: 'App',
@@ -25,11 +30,12 @@ export default defineComponent({
   },
   setup() {
     const state = reactive<{ todos: Todo[] }>({
-      todos: [
-        { id: 1, title: '奔驰', isCompleted: false },
-        { id: 2, title: '宝马', isCompleted: true },
-        { id: 3, title: '特斯拉', isCompleted: false },
-      ],
+      todos: [],
+    })
+    onMounted(() => {
+      setTimeout(() => {
+        state.todos = readTodos()
+      }, 1000)
     })
     const addTodo = (todo: Todo) => {
       state.todos.unshift(todo)
@@ -49,6 +55,7 @@ export default defineComponent({
     const clearAllCompletedTodos = () => {
       state.todos = state.todos.filter((todo) => !todo.isCompleted)
     }
+    watch(() => state.todos, saveTodos, { deep: true })
     return {
       ...toRefs(state),
       addTodo,
